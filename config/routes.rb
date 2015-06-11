@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
-  resources :todo_lists
-
+  root "todo_lists#index"
+  resources :todo_lists do
+    collection do
+      get :todo_lists_json
+    end
+  end
 end
