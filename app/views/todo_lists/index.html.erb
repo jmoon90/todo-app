@@ -14,12 +14,12 @@
 
   <tbody>
       <tr ng-repeat="todoList in todoLists">
-        <td >{{ todoList.list }}</td>
-      </tr>
-  </tbody>
-</table>
+        <td class={{checkbox}}><input type="checkbox" ng-model='checkbox'
+                                    ng-true-value="'finished'"
+                                    ng-false-value="'unfinished'"
+                                    ng-click="completeTask()">{{ todoList.list }}</td>
+        </tr>
+    </tbody>
+  </table>
 
-<br>
-
-<%= link_to 'New Todo list', new_todo_list_path %>
-</section>
+  </section>
