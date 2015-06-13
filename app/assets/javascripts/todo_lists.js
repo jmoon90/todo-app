@@ -6,16 +6,19 @@ todoLists.controller("todoListController", ['$scope', '$http',  function($scope,
     value1 : false
   };
 
+  $scope.completeTasks = [];
+
 
   $http.get("/todo_lists/todo_lists_json")
     .success(function(result) {
-      $scope.todoLists = result;
+       $scope.todoLists = result[0].incomplete
+       $scope.completeTasks = result[0].complete
      });
 
   $scope.addTask = function() {
     $http.post("/todo_lists", { list: $scope.newList, completed: false })
-      .success(function(success) {
-         $scope.todoLists = success
+      .success(function(result) {
+         $scope.todoLists = result
          $scope.newList = '';
        })
        .error(function(data, status, headers, config) {
@@ -23,6 +26,13 @@ todoLists.controller("todoListController", ['$scope', '$http',  function($scope,
        });
   }
 
-  $scope.completeTask = function() {
+  $scope.completeTask = function(key) {
+    var id = $scope.todoLists[key].id
+    $http.put("/todo_lists/"+ id, { completed: true })
+      .success(function(result) {
+         $scope.todoLists = result[0].incomplete
+         $scope.completeTasks = result[0].complete
+      });
+    // $http.post(/todo_lists, { list: $scope.
   }
 }]);

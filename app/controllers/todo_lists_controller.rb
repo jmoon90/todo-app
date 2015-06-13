@@ -6,7 +6,7 @@ class TodoListsController < ApplicationController
   # GET /todo_lists
   # GET /todo_lists.json
   def index
-    @todo_lists = TodoList.all
+    @todo_lists = TodoList.where(:completed => false)
   end
 
   # GET /todo_lists/1
@@ -30,7 +30,7 @@ class TodoListsController < ApplicationController
 
     respond_to do |format|
       if @todo_list.save
-        format.html {render json: TodoList.all.to_json}
+        format.html {render json: TodoList.where(:completed => false).to_json}
       end
     end
   end
@@ -39,12 +39,8 @@ class TodoListsController < ApplicationController
   # PATCH/PUT /todo_lists/1.json
   def update
     respond_to do |format|
-      if @todo_list.update(todo_list_params)
-        format.html { redirect_to @todo_list, notice: 'Todo list was successfully updated.' }
-        format.json { render :show, status: :ok, location: @todo_list }
-      else
-        format.html { render :edit }
-        format.json { render json: @todo_list.errors, status: :unprocessable_entity }
+      if @todo_list.update!(todo_list_params)
+        format.html {render json: [{:incomplete => TodoList.where(:completed => false), :complete => TodoList.where(:completed => true).reverse}].to_json}
       end
     end
   end
@@ -60,8 +56,9 @@ class TodoListsController < ApplicationController
   end
 
   def todo_lists_json
-    render json: TodoList.all.to_json
+    render json: [{:incomplete => TodoList.where(:completed => false), :complete => TodoList.where(:completed => true).reverse}].to_json
   end
+
   protected
 
     def verified_request?

@@ -2,8 +2,22 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.finished {
- text-decoration: line-through;
+.align-center {
+  text-align: center;
 }
 
+.todo-app {
+  font-size: 16px;
+  .todo-lists {
+    text-align: left;
+    padding-left: 300px;
+  }
 
+  .finished {
+    text-decoration: line-through !important;
+  }
+
+  .todo-checkbox {
+    margin-right: 10px;
+  }
+}
