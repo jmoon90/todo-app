@@ -33,7 +33,7 @@
     </thead>
     <tbody>
         <tr class='align-center' ng-repeat="(key, completeTask) in completeTasks">
-          <td class="todo-lists"><span>{{ completeTask.list }}</span></td>
+          <td class="todo-lists"><span>{{ completeTask.list }} {{completeTask.completed_time}}</span></td>
         </tr>
     </tbody>
   </table>
